@@ -1,70 +1,60 @@
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MedianOfTwoSortedArraysTest {
 
     @Test
     public void testSimpleExample() {
-        ArrayList<Integer> nums1 = new ArrayList<Integer>();
-        nums1.add(1);
-        nums1.add(3);
+        List<Integer> nums1 = Arrays.asList(1, 3);
 
-        ArrayList<Integer> nums2 = new ArrayList<Integer>();
-        nums2.add(2);
+        List<Integer> nums2 = Collections.singletonList(2);
 
         double result = MedianOfTwoSortedArrays.execute(nums1,nums2);
-        assertTrue(result == 2);
+        assertEquals(result, 2);
     }
 
     @Test
     public void testEvenNumberOfIntegers() {
-        ArrayList<Integer> nums1 = new ArrayList<Integer>();
-        nums1.add(1);
-        nums1.add(2);
+        List<Integer> nums1 = Arrays.asList(1, 2);
 
-        ArrayList<Integer> nums2 = new ArrayList<Integer>();
-        nums2.add(3);
-        nums2.add(4);
+        List<Integer> nums2 = Arrays.asList(3, 4);
 
         double result = MedianOfTwoSortedArrays.execute(nums1,nums2);
-        assertTrue(result == 2.5);
+        assertEquals(result, 2.5);
     }
 
     @Test
     public void testThreeZeroes() {
-        ArrayList<Integer> nums1 = new ArrayList<Integer>();
-        nums1.add(0);
-        nums1.add(0);
+        List<Integer> nums1 = Arrays.asList(0, 0);
 
-        ArrayList<Integer> nums2 = new ArrayList<Integer>();
-        nums2.add(0);
+        List<Integer> nums2 = Collections.singletonList(0);
 
         double result = MedianOfTwoSortedArrays.execute(nums1,nums2);
-        assertTrue(result == 0);
+        assertEquals(result, 0);
     }
 
     @Test
     public void testFirstListEmpty() {
-        ArrayList<Integer> nums1 = new ArrayList<Integer>();
+        List<Integer> nums1 = Collections.emptyList();
 
-        ArrayList<Integer> nums2 = new ArrayList<Integer>();
-        nums2.add(1);
+        List<Integer> nums2 = Collections.singletonList(1);
 
         double result = MedianOfTwoSortedArrays.execute(nums1,nums2);
-        assertTrue(result == 1);
+        assertEquals(result, 1);
     }
 
     @Test
     public void testSecondListEmpty() {
-        ArrayList<Integer> nums1 = new ArrayList<Integer>();
-        nums1.add(2);
+        List<Integer> nums1 = Collections.singletonList(2);
 
-        ArrayList<Integer> nums2 = new ArrayList<Integer>();
+        List<Integer> nums2 = Collections.emptyList();
 
         double result = MedianOfTwoSortedArrays.execute(nums1,nums2);
-        assertTrue(result == 2);
+        assertEquals(result, 2);
     }
 }

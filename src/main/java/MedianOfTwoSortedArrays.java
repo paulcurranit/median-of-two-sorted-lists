@@ -1,69 +1,71 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class MedianOfTwoSortedArrays {
-    private static int INDEX1 = 0;
-    private static int INDEX2 = 1;
-    private static int INDEX = 0;
-    private static int NEXTNUMBER = 1;
+    private static final int INTEGERLIST1_INDEX = 0;
+    private static final int INTEGERLIST2_INDEX = 1;
+    private static final int INDEX = 0;
+    private static final int NEXT_NUMBER_INDEX = 1;
 
-    public static double execute(ArrayList<Integer> nums1, ArrayList<Integer> nums2) {
-        int length1 = nums1.size();
-        int length2 = nums2.size();
+    public static double execute(List<Integer> integerList1, List<Integer> integerList2) {
+        int length1 = integerList1.size();
+        int length2 = integerList2.size();
 
         int totalLength = length1 + length2;
-        boolean even = totalLength % 2 == 0;
-        int midPoint = totalLength / 2 + totalLength % 2 - 1;
+        boolean combinedListEven = totalLength % 2 == 0;
+        int midPointOfCombinedList = totalLength / 2 + totalLength % 2 - 1;
 
-        int[] listIndicies = {0,0};
+        int[] currentPositionOfArraysList = {0,0};
         int result = 0;
 
-        while(listIndicies[INDEX1] + listIndicies[INDEX2] <= midPoint) {
-            ArrayList<Integer> nextNumber = getNextInt(nums1, listIndicies[INDEX1],
-                                                nums2, listIndicies[INDEX2]);
+        while(currentPositionOfCombinedList(currentPositionOfArraysList) <= midPointOfCombinedList) {
+            List<Integer> nextNumber = getNextInt(integerList1, currentPositionOfArraysList[INTEGERLIST1_INDEX],
+                                                integerList2, currentPositionOfArraysList[INTEGERLIST2_INDEX]);
 
-            if(listIndicies[INDEX1]  + listIndicies[INDEX2] == midPoint) {
-                if(even) {
-                    result += nextNumber.get(NEXTNUMBER);
-                    listIndicies[nextNumber.get(INDEX)]++;
-                    nextNumber = getNextInt(nums1, listIndicies[INDEX1],
-                            nums2, listIndicies[INDEX2]);
-                    result += nextNumber.get(NEXTNUMBER);
+            if(currentPositionOfCombinedList(currentPositionOfArraysList) == midPointOfCombinedList) {
+                if(combinedListEven) {
+                    result += nextNumber.get(NEXT_NUMBER_INDEX);
+
+                    currentPositionOfArraysList[nextNumber.get(INDEX)]++;
+                    nextNumber = getNextInt(integerList1, currentPositionOfArraysList[INTEGERLIST1_INDEX],
+                            integerList2, currentPositionOfArraysList[INTEGERLIST2_INDEX]);
+                    result += nextNumber.get(NEXT_NUMBER_INDEX);
+
                     return result / 2.0;
 
                 } else {
-                    return nextNumber.get(NEXTNUMBER);
+                    return nextNumber.get(NEXT_NUMBER_INDEX);
                 }
-            } else {
-                listIndicies[nextNumber.get(INDEX)]++;
             }
+
+            currentPositionOfArraysList[nextNumber.get(INDEX)]++;
         }
 
         return result;
     }
 
-    private static ArrayList<Integer> getNextInt
-            (ArrayList<Integer>nums1, int index1, ArrayList<Integer>nums2, int index2) {
-        int int1 = 0;
-        int int2 = 0;
+    private static int currentPositionOfCombinedList(int[] currentPositionOfArraysList) {
+        return currentPositionOfArraysList[INTEGERLIST1_INDEX] + currentPositionOfArraysList[INTEGERLIST2_INDEX];
+    }
 
-        if(index1 < nums1.size()) {
-            int1 = nums1.get(index1);
-        } else {
-            int1 = nums2.get(index2);
-        }
-        if(index2 < nums2.size()) {
-            int2 = nums2.get(index2);
-        } else {
-            int2 = nums1.get(index1);
-        }
-        ArrayList<Integer> result = new ArrayList<>();
+    private static List<Integer> getNextInt(
+            List<Integer>nums1,
+            int index1,
+            List<Integer>nums2,
+            int index2
+    ) {
+        int int1 = index1 < nums1.size() ? nums1.get(index1) : nums2.get(index2);
+        int int2 = index2 < nums2.size() ? nums2.get(index2) : nums1.get(index1);
+
+        List<Integer> result = new ArrayList<>();
         if(int1 < int2) {
-            result.add(INDEX1);
+            result.add(INTEGERLIST1_INDEX);
             result.add(int1);
         } else {
-            result.add(INDEX2);
+            result.add(INTEGERLIST2_INDEX);
             result.add(int2);
         }
+
         return  result;
     }
 }
